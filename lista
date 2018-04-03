@@ -30,6 +30,11 @@ class lista{
 		void insereFim(dados dado);
 		void inserePosicao(dados posicao, dados dado);
 		void imprime();
+		void remove(dados posicao);
+		void procura(dados valor);
+		void imprimeReverso();
+		void imprimeReversoAux(noh* Noh);
+		
 };
 
 lista::lista(){
@@ -103,6 +108,45 @@ void lista::imprime(){
 	}
 }
 
+
+void lista::remove(dados posicao){
+	noh* aux = primeiro;
+
+	if(posicao == 0){
+		primeiro = aux->proximo;
+		delete aux;
+	}
+	else {
+		dados posAux = 1;
+		noh* ant = primeiro;
+		while(posAux < posicao+1){
+			ant = aux;
+			aux = aux->proximo;
+			posAux++;
+		}
+		if(aux == ultimo){
+			ant->proximo = NULL;
+			ultimo = ant;
+			delete aux;
+		}
+		else{
+			ant->proximo = aux->proximo;
+			delete aux;
+		}
+	}
+	_tamanho--;
+}
+
+void lista::procura(dados valor){
+	noh* aux = primeiro;
+	dados posAux = 0;
+	while(aux->dado != valor){
+		aux = aux->proximo;
+		posAux++;
+	}
+	cout << posAux;
+}
+
 int main(){
 	int num, dado, pos;
 	lista novaLista;
@@ -123,4 +167,21 @@ int main(){
 	novaLista.inserePosicao(pos, dado);
 	
 	novaLista.imprime();
+	
+	cout << endl;
+	
+	cin >> pos;
+	
+	novaLista.remove(pos);
+	
+	novaLista.imprime();
+	
+	cout << endl;
+	
+	cin >> dado;
+	
+	novaLista.procura(dado);
+	
+	novaLista.imprimeReverso();
+		
 }
