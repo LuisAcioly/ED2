@@ -1,0 +1,101 @@
+#include <iostream>
+
+using namespace std;
+
+typedef int dados;
+
+class noh {
+	friend class lista;
+	private:
+		dados dado;	
+		noh* proximo;
+	public:
+		noh(dados d = 0);
+};
+
+noh::noh(dados d){
+	dado = d;
+	proximo = NULL;
+}
+
+class lista{
+	private:
+		noh* primeiro;
+		noh* ultimo;
+		int _tamanho;
+		
+	public:
+		lista();
+		void insereInicio(dados dado);
+		void insereFim(dados dado);
+		void inserePosicao(dados posicao, dados dado);
+		void imprime();
+};
+
+lista::lista(){
+	primeiro = NULL;
+	ultimo = NULL;
+	_tamanho = 0;
+}
+
+void lista::insereInicio(dados dado){
+	noh* novo = new noh(dado);
+	
+	if(primeiro == NULL){
+		primeiro = novo;
+		ultimo = novo;
+	}
+	else{
+		novo->proximo = primeiro;
+		primeiro = novo;
+	}
+	_tamanho++;
+}
+void lista::insereFim(dados dado){
+	noh* novo = new noh(dado);
+	
+	if(primeiro == NULL){
+		primeiro = novo;
+		ultimo = novo;
+	}
+	else{
+		ultimo->proximo = novo;
+		ultimo = novo;
+	}
+	_tamanho++;
+}
+void lista::inserePosicao(dados posicao, dados dado){
+	noh* novo = new noh(dado);
+	
+	if(primeiro == NULL){
+		primeiro = novo;
+		ultimo = novo;
+	}
+	else{
+		ultimo->proximo = novo;
+		ultimo = novo;
+	}
+	_tamanho++;
+}
+
+void lista::imprime(){
+	noh* aux = primeiro;
+	while(aux != NULL){
+		cout << aux->dado;
+		aux = aux->proximo;
+	}
+}
+
+int main(){
+	int num, dado;
+	lista novaLista;
+	
+	cin >> num;
+	
+	for (int i = 0; i < num; i++){
+		cin >> dado;
+		novaLista.insereFim(dado);
+	}
+	novaLista.imprime();
+	
+}
