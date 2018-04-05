@@ -9,6 +9,7 @@ class noh {
 	private:
 		dados dado;	
 		noh* proximo;
+		noh* anterior;
 	public:
 		noh(dados d = 0);
 };
@@ -16,6 +17,7 @@ class noh {
 noh::noh(dados d){
 	dado = d;
 	proximo = NULL;
+	anterior = NULL;
 }
 
 class lista{
@@ -27,6 +29,7 @@ class lista{
 		
 	public:
 		lista();
+		lista (const lista& copiaLista);
 		void insereInicio(dados dado);
 		void insereFim(dados dado);
 		void inserePosicao(dados posicao, dados dado);
@@ -34,13 +37,24 @@ class lista{
 		void remove(dados posicao);
 		void procura(dados valor);
 		void imprimeReverso();
-		
 };
 
 lista::lista(){
 	primeiro = NULL;
 	ultimo = NULL;
 	_tamanho = 0;
+}
+lista::lista(const lista& copiaLista){
+	primeiro = NULL;
+	ultimo = NULL;
+	_tamanho = 0;
+	
+	noh* aux = copiaLista.primeiro;
+	
+	while(aux != NULL){
+		insereFim(aux->dado);
+		aux = aux->proximo;
+	}
 }
 
 void lista::insereInicio(dados dado){
@@ -51,6 +65,7 @@ void lista::insereInicio(dados dado){
 		ultimo = novo;
 	}
 	else{
+		primeiro->anterior = novo;
 		novo->proximo = primeiro;
 		primeiro = novo;
 	}
@@ -64,6 +79,7 @@ void lista::insereFim(dados dado){
 		ultimo = novo;
 	}
 	else{
+		novo->anterior = ultimo;
 		ultimo->proximo = novo;
 		ultimo = novo;
 	}
@@ -77,11 +93,13 @@ void lista::inserePosicao(dados posicao, dados dado){
 		ultimo = novo;
 	}
 	else if(posicao == 0 ){
+		primeiro->anterior = novo;
 		novo->proximo = primeiro;
 		primeiro = novo;
 	}
 	
 	else if(posicao == _tamanho){
+		novo->anterior = ultimo;
 		ultimo->proximo = novo;
 		ultimo = novo;
 	}
@@ -93,7 +111,7 @@ void lista::inserePosicao(dados posicao, dados dado){
 			aux = aux->proximo;
 			posAux++;
 		}
-		
+		novo->anterior = aux;
 		novo->proximo = aux->proximo;
 		aux->proximo = novo;
 	}
@@ -173,6 +191,9 @@ int main(){
 		cin >> dado;
 		novaLista.insereFim(dado);
 	}
+	
+	lista listaCopiada(novaLista);
+	
 	novaLista.imprime();
 	
 	cout << endl;
@@ -201,5 +222,10 @@ int main(){
 	cout << endl;
 	
 	novaLista.imprimeReverso();
-		
+	
+	cout << endl;
+	
+	listaCopiada.imprime();
+	
+	
 }
