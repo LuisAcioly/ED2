@@ -23,6 +23,7 @@ class lista{
 		noh* primeiro;
 		noh* ultimo;
 		int _tamanho;
+		void imprimeReversoAux(noh* atual);
 		
 	public:
 		lista();
@@ -33,7 +34,6 @@ class lista{
 		void remove(dados posicao);
 		void procura(dados valor);
 		void imprimeReverso();
-		void imprimeReversoAux(noh* Noh);
 		
 };
 
@@ -108,6 +108,22 @@ void lista::imprime(){
 	}
 }
 
+void lista::imprimeReverso(){
+	imprimeReversoAux(primeiro);
+}
+
+void lista::imprimeReversoAux(noh* atual){
+	if(atual == NULL){
+		return;
+	}
+	else{
+		imprimeReversoAux(atual->proximo);
+		cout << atual->dado << " ";
+	}
+}
+
+
+
 
 void lista::remove(dados posicao){
 	noh* aux = primeiro;
@@ -181,6 +197,8 @@ int main(){
 	cin >> dado;
 	
 	novaLista.procura(dado);
+	
+	cout << endl;
 	
 	novaLista.imprimeReverso();
 		
