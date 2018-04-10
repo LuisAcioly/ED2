@@ -37,6 +37,7 @@ class lista{
 		void remove(dados posicao);
 		void procura(dados valor);
 		void imprimeReverso();
+		void troca();
 };
 
 lista::lista(){
@@ -140,7 +141,38 @@ void lista::imprimeReversoAux(noh* atual){
 	}
 }
 
-
+void lista::troca(){
+	noh* auxPrimeiro;
+	noh* auxProxPrimeiro;
+	noh* auxUltimo;
+	noh* auxPenUltimo;
+	
+	dados posAux = 0;
+		
+		if((pos1 == 0) and (pos2 == _tamanho-1)){
+			auxPrimeiro = primeiro;
+			auxProxPrimeiro = primeiro->proximo;
+			auxUltimo = ultimo;
+			auxPenUltimo = ultimo->anterior;
+			auxPrimeiro->proximo = NULL;
+			auxPrimeiro->anterior = auxPenUltimo;
+			auxPrimeiro->anterior->proximo = auxPrimeiro;
+			auxUltimo->proximo = auxProxPrimeiro;
+			auxUltimo->anterior = NULL;
+			auxUltimo->proximo->anterior = auxUltimo;
+			ultimo = auxPrimeiro;
+			primeiro = auxUltimo;
+		}
+		else if(pos1 = pos2-1 and pos2 = pos1+1){
+		auxPrimeiro = primeiro;
+		auxUltimo = primeiro;
+			while(posAux < pos1-1){
+				auxPrimeiro = auxPrimeiro->proximo;
+				posAux++;
+			}
+			auxUltimo = auxPrimeiro->proximo;
+		}
+}
 
 
 void lista::remove(dados posicao){
@@ -226,6 +258,12 @@ int main(){
 	cout << endl;
 	
 	listaCopiada.imprime();
+	
+	novaLista.troca();
+	
+	cout << endl;
+	
+	novaLista.imprime();
 	
 	
 }
