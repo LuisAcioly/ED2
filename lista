@@ -30,6 +30,8 @@ class lista{
 	public:
 		lista();
 		lista (const lista& copiaLista);
+		lista& operator=(const lista &outraLista);
+		lista (dados vetor, dados tam);
 		void insereInicio(dados dado);
 		void insereFim(dados dado);
 		void inserePosicao(dados posicao, dados dado);
@@ -38,12 +40,24 @@ class lista{
 		void procura(dados valor);
 		void imprimeReverso();
 		void troca(dados pos1, dados pos2);
+		void removeTodos();
+		 
 };
 
 lista::lista(){
 	primeiro = NULL;
 	ultimo = NULL;
 	_tamanho = 0;
+}
+lista::lista(dados vetor[], dados tam){
+	primeiro = NULL;
+	ultimo = NULL;
+	_tamanho = tam;
+	
+	for (int i = 0; i < _tamanho; i++){
+		insereFim(vetor[i]);
+	}
+	
 }
 lista::lista(const lista& copiaLista){
 	primeiro = NULL;
@@ -56,6 +70,29 @@ lista::lista(const lista& copiaLista){
 		insereFim(aux->dado);
 		aux = aux->proximo;
 	}
+}
+
+lista& lista::operator=(const lista &outraLista){
+	removeTodos();
+	dados posAux = 0;
+	noh* aux = outraLista.primeiro;
+	
+	while(posAux < outraLista._tamanho){
+		insereFim(aux->dado);
+		aux = aux->proximo;
+		posAux++;
+	}
+	
+	return *this;
+}
+
+void lista::removeTodos(){
+	dados posAux = 0;
+	
+	while(posAux < _tamanho){
+		remove(posAux);
+	}
+	
 }
 
 void lista::insereInicio(dados dado){
@@ -241,6 +278,7 @@ void lista::troca(dados pos1, dados pos2){
 					auxPrimeiro = auxPrimeiro->proximo;
 					posAux++;
 				}
+				auxUltimo = ultimo;
 				auxProxPrimeiro = auxPrimeiro->anterior;
 				auxUltimo->proximo = auxPrimeiro->proximo;
 				auxPrimeiro->proximo = NULL;
@@ -253,6 +291,29 @@ void lista::troca(dados pos1, dados pos2){
 				
 				ultimo = auxPrimeiro;
 		
+			}
+			else{
+				while(posAux != pos1){
+					auxPrimeiro = auxPrimeiro->proximo;
+					posAux++;
+				}
+				posAux = 0;
+				while(posAux != pos2){
+					auxUltimo = auxUltimo->proximo;
+					posAux++;
+				}
+				
+				auxProxPrimeiro = auxPrimeiro->proximo;
+				auxPenUltimo = auxUltimo->anterior;
+				auxPrimeiro->proximo = auxUltimo->proximo;
+				auxPrimeiro->proximo->anterior = auxPrimeiro;
+				auxUltimo->proximo = auxProxPrimeiro;
+				auxUltimo->proximo->anterior = auxUltimo;
+				auxUltimo->anterior = auxPrimeiro->anterior;
+				auxUltimo->anterior->proximo = auxUltimo;
+				auxPrimeiro->anterior = auxPenUltimo;
+				auxPrimeiro->anterior->proximo = auxPrimeiro;
+				
 			}
 		
 		}
@@ -298,8 +359,9 @@ void lista::procura(dados valor){
 }
 
 int main(){
-	int num, dado, pos, pos2;
+	int num, dado, pos, pos2, vetor[5];
 	lista novaLista;
+	lista Lista2;
 	
 	cin >> num;
 	
@@ -310,7 +372,7 @@ int main(){
 	
 	lista listaCopiada(novaLista);
 	
-	novaLista.imprime();
+	//novaLista.imprime();
 	
 	cout << endl;
 	
@@ -349,13 +411,18 @@ int main(){
 	
 	//novaLista.imprime();
 	
-	cin >> pos >> pos2;
+	//cin >> pos >> pos2;
 	
-	novaLista.troca(pos, pos2);
+	//novaLista.troca(pos, pos2);
 	
-	cout << endl;
+	//cout << endl;
 	
+	//novaLista.imprime();
+	
+	//cout << endl;
+	
+	Lista2 = novaLista;
 	novaLista.imprime();
-	
+	Lista2.imprime();
 	
 }
