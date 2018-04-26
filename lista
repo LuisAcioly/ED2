@@ -96,7 +96,37 @@ void lista::removeTodos(){
 	
 }
 void lista::ordena(){
-
+	noh* aux = primeiro;
+	
+	bool ordenou = false;
+	
+	dados i = 0;
+	
+	
+	while(ordenou != true){
+		
+			if(aux->proximo == NULL){
+					aux = primeiro;
+					i = 0;
+					cout << "VOLTOU" << endl;
+					ordenou = false;
+			}
+			else if(aux->dado > aux->proximo->dado){
+					troca(i, i+1);
+					ordenou = false;
+					cout << aux->anterior->dado;
+					cout << "TROCOU" << endl;
+			}
+			else{
+				ordenou = true;
+				cout << "ORDENOU" << endl;
+			}
+			i++;
+	}
+		
+	
+	
+	
 }
 
 void lista::insereInicio(dados dado){
