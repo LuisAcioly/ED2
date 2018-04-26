@@ -31,6 +31,8 @@ class lista{
 		lista();
 		lista (const lista& copiaLista);
 		lista& operator=(const lista &outraLista);
+		lista& operator+(const lista &outraLista);
+		lista& operator-(const lista &outraLista);
 		lista (dados vetor[], dados tam);
 		void insereInicio(dados dado);
 		void insereFim(dados dado);
@@ -42,6 +44,7 @@ class lista{
 		void troca(dados pos1, dados pos2);
 		void removeTodos();
 		void ordena();
+		noh* acessaPos(dados pos);
 		 
 };
 
@@ -73,6 +76,32 @@ lista::lista(const lista& copiaLista){
 	}
 }
 
+noh* lista::acessaPos(dados pos){
+	noh* aux;
+	
+	dados posAux = 0;
+	
+	if(pos == 0){
+		aux = primeiro;
+		return aux;
+	}
+	
+	if(pos == _tamanho-1){
+		aux = ultimo;
+		return aux;
+	}
+	
+	else{
+		aux = primeiro;
+		while(posAux != pos){
+			aux = aux->proximo;
+			posAux++;
+		}
+		
+		return aux;
+	}
+}
+
 lista& lista::operator=(const lista &outraLista){
 	removeTodos();
 	dados posAux = 0;
@@ -86,6 +115,37 @@ lista& lista::operator=(const lista &outraLista){
 	
 	return *this;
 }
+lista& lista::operator + (const lista &outraLista){
+	noh* aux = outraLista.primeiro;
+	dados posAux = 0;
+	
+	while(posAux < outraLista._tamanho){
+		insereFim(aux->dado);
+		aux = aux->proximo;
+		posAux++;
+	}
+	
+	return *this;
+}
+lista& lista::operator -(const lista &outraLista){
+	noh* aux;
+	noh* aux2;
+	
+	for (int i = 0; i < _tamanho; i++){
+		for (int j = 0; j < _tamanho; j++)
+		{
+			aux = outraLista.acessaPos(i);
+			aux2 = outraLista.acessaPos(j);
+			if(aux->dado == aux2->dado){
+				remove(i);
+			}
+		}
+	}
+	
+	return *this;
+}
+
+
 
 void lista::removeTodos(){
 	dados posAux = 0;
@@ -96,38 +156,27 @@ void lista::removeTodos(){
 	
 }
 void lista::ordena(){
-	noh* aux = primeiro;
+	noh* aux;
+
+	cout << endl;
 	
-	bool ordenou = false;
+	bool ordenou = true;
 	
-	dados i = 0;
-	
-	
-	while(ordenou != true){
-		
-			if(aux->proximo == NULL){
-					aux = primeiro;
-					i = 0;
-					cout << "VOLTOU" << endl;
-					ordenou = false;
-			}
-			else if(aux->dado > aux->proximo->dado){
-					troca(i, i+1);
-					ordenou = false;
-					cout << aux->anterior->dado;
-					cout << "TROCOU" << endl;
-			}
-			else{
+	while(ordenou){
+		ordenou = false;
+		for (int i = 0; i < _tamanho-1; i++)
+		{
+			aux = acessaPos(i);
+			if(aux->dado > aux->proximo->dado){
+				troca(i, i+1);
 				ordenou = true;
-				cout << "ORDENOU" << endl;
 			}
-			i++;
-	}
+		}
 		
-	
-	
-	
+	}
+
 }
+
 
 void lista::insereInicio(dados dado){
 	noh* novo = new noh(dado);
@@ -223,6 +272,7 @@ void lista::troca(dados pos1, dados pos2){
 	noh* auxProxPrimeiro;
 	noh* auxUltimo;
 	noh* auxPenUltimo;
+
 	
 	dados posAux = 0;
 		
@@ -361,30 +411,26 @@ void lista::troca(dados pos1, dados pos2){
 
 
 void lista::remove(dados posicao){
-	noh* aux = primeiro;
+	noh* aux;
+	
+	aux = acessaPos(posicao);
 
 	if(posicao == 0){
+		aux->proximo->anterior = NULL;
 		primeiro = aux->proximo;
 		delete aux;
 	}
-	else {
-		dados posAux = 1;
-		noh* ant = primeiro;
-		while(posAux < posicao+1){
-			ant = aux;
-			aux = aux->proximo;
-			posAux++;
-		}
-		if(aux == ultimo){
-			ant->proximo = NULL;
-			ultimo = ant;
+	else if(posicao == _tamanho-1){
+			aux->anterior->proximo = NULL;
+			ultimo = aux->anterior;
 			delete aux;
-		}
-		else{
-			ant->proximo = aux->proximo;
-			delete aux;
-		}
 	}
+	else{
+		aux->anterior->proximo = aux->proximo;
+		aux->proximo->anterior = aux->anterior;
+		delete aux;
+	}
+		
 	_tamanho--;
 }
 
@@ -412,9 +458,11 @@ int main(){
 	
 	lista listaCopiada(novaLista);
 	
+	//novaLista + novaLista;
+	
 	novaLista.imprime();
 	
-	cout << endl;
+	//cout << endl;
 	
 	//cin >> pos;
 	//cin >> dado;
@@ -443,8 +491,6 @@ int main(){
 	
 	//cout << endl;
 	
-	//listaCopiada.imprime();
-	
 	//novaLista.troca();
 	
 	//cout << endl;
@@ -458,15 +504,22 @@ int main(){
 
 	//cout << endl;
 	
+	
 	//novaLista.imprime();
 	
 	//cout << endl;
 	
 	//Lista2 = novaLista;
 	
-	novaLista.ordena();
+	//novaLista.ordena();
+	
+	//cout << endl;
+	
+	
 	
 	novaLista.imprime();
+
+
 	
 
 	
