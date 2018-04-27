@@ -1,1 +1,121 @@
 
+#include <iostream>
+using namespace std;
+
+
+int funcaoHash(string xave, int tam){
+	int primo = 13;
+	long posicao = 0;
+	
+	for (unsigned int i = 0; i < xave.length(); i++)
+	{
+		posicao = (primo*posicao + xave[i])%tam;
+	}
+	
+	return posicao;
+}
+
+class noh{
+	friend class hash;
+	
+	public:
+		
+		noh();
+		
+	private:
+	
+		string chave;
+		string valor;
+		noh *proximo;
+};
+
+class hash{
+	public:
+		hash(int tamanho);
+		void insere(string xave, string dado);
+		bool existe(string xave);
+	private:
+		int capacidade;
+		noh **vetor;
+};
+
+noh::noh(){
+	proximo = NULL;
+}
+
+hash::hash(int tamanho){
+	this->capacidade = tamanho;
+	this->vetor = new noh*[capacidade];
+	
+	for (int i = 0; i < capacidade; i++)
+	{
+		vetor[i] = NULL;
+	}
+	 
+}
+
+bool hash::existe(string xave){
+	int posicao = funcaoHash(xave, capacidade);
+	
+		if(vetor[posicao] != NULL and vetor[posicao]->chave == xave){
+			return true;
+		}
+		
+		else if(vetor[posicao] != NULL and vetor[posicao]->chave != xave){
+			noh* aux = vetor[posicao];
+			
+			while(aux != NULL){
+				if(vetor[posicao]->chave == xave){
+					return true;
+				}
+				
+				aux = aux->proximo;
+			}
+		}
+		
+		return false;
+}
+
+void hash::insere(string xave, string dado){
+	int posicao;
+	
+	posicao = funcaoHash(xave, capacidade);
+	
+	if(existe(xave) == false){
+		
+		if(vetor[posicao] == NULL){
+			vetor[posicao] = new noh;
+			vetor[posicao]->chave = xave;
+			vetor[posicao]->valor = dado;
+		}
+		else if(vetor[posicao] != NULL){
+			noh* aux = vetor[posicao];
+			
+			while(aux != NULL){
+				aux = aux->proximo;
+			}
+			
+			aux = new noh;
+			vetor[posicao]->proximo = aux;
+			aux->chave = xave;
+			aux->valor = dado;
+		}
+		else{
+			cout << "CHAVE EXISTENTE FILHO DA PUTA!" <<	endl;
+		}
+	}
+}
+
+int main()
+{
+    int tamanho = 5;
+    
+    string xave, dado;
+    
+    cin >> xave >> dado;
+    
+    hash tabela(tamanho);
+    
+    tabela.insere(xave, dado);
+    return 0;
+}
