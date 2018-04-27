@@ -47,6 +47,7 @@ class lista{
 		noh* acessaPos(dados pos);
 		void removeRepetido();
 		void divide(dados n, lista& outraLista);
+		void inverte();
 		 
 };
 
@@ -195,6 +196,18 @@ void lista::ordena(){
 		
 	}
 
+}
+
+void lista::inverte(){
+
+	int posAux1 = 0, posAux2 = _tamanho-1;
+	
+	while(posAux1 <= posAux2){
+		troca(posAux1, posAux2);
+		posAux1++;
+		posAux2--;
+	}
+	
 }
 
 void lista::removeRepetido(){
@@ -564,20 +577,22 @@ int main(){
 	//novaLista.imprime();
 
 
-	Lista2.divide(3, novaLista);
+	//~ Lista2.divide(3, novaLista);
 	
-	cout << endl;
+	//~ cout << endl;
 	
-	Lista2.imprime();
+	//~ Lista2.imprime();
 	
-	cout << endl;
+	//~ cout << endl;
 	
-	novaLista.imprime();
+	//~ novaLista.imprime();
 	
 	//~ cout << endl;
 
 	//~ novaLista.remove(3);
 	
-	//~ novaLista.imprime();
+	novaLista.inverte();
+	
+	 novaLista.imprime();
 }
  
