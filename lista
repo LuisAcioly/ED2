@@ -32,7 +32,7 @@ class lista{
 		lista (const lista& copiaLista);
 		lista& operator=(const lista &outraLista);
 		lista& operator+(const lista &outraLista);
-		lista& operator-(const lista &outraLista);
+		lista& operator-(lista &outraLista);
 		lista (dados vetor[], dados tam);
 		void insereInicio(dados dado);
 		void insereFim(dados dado);
@@ -45,6 +45,8 @@ class lista{
 		void removeTodos();
 		void ordena();
 		noh* acessaPos(dados pos);
+		void removeRepetido();
+		void divide(dados n, lista& outraLista);
 		 
 };
 
@@ -127,12 +129,12 @@ lista& lista::operator + (const lista &outraLista){
 	
 	return *this;
 }
-lista& lista::operator -(const lista &outraLista){
+lista& lista::operator -(lista& outraLista){
 	noh* aux;
 	noh* aux2;
 	
-	for (int i = 0; i < _tamanho; i++){
-		for (int j = 0; j < _tamanho; j++)
+	for (dados i = 0; i < _tamanho; i++){
+		for (dados j = 0; j < _tamanho; j++)
 		{
 			aux = outraLista.acessaPos(i);
 			aux2 = outraLista.acessaPos(j);
@@ -141,11 +143,29 @@ lista& lista::operator -(const lista &outraLista){
 			}
 		}
 	}
-	
 	return *this;
 }
 
+void lista::divide(dados n, lista& outraLista){
+	noh* aux;
+	dados posAux = n+1;
+	
+	aux = outraLista.acessaPos(n+1);
+	while(posAux < outraLista._tamanho){
+		insereFim(aux->dado);
+		aux = aux->proximo;
+		posAux++;
+	}
+	
+	posAux = n+1;
+	aux = outraLista.acessaPos(n+1);
+	
+	while(aux != NULL){
+		outraLista.remove(posAux);
+		aux = aux->proximo;
+	}
 
+}
 
 void lista::removeTodos(){
 	dados posAux = 0;
@@ -175,6 +195,25 @@ void lista::ordena(){
 		
 	}
 
+}
+
+void lista::removeRepetido(){
+	noh* aux;
+	noh* aux2;
+	
+	for (int i = 0; i < _tamanho; i++)
+	{
+		for (int j = i+1; j < _tamanho; j++)
+		{
+			aux = acessaPos(i);
+			aux2 = acessaPos(j);
+			if(aux->dado == aux2->dado){
+				remove(i);
+			}
+		}
+		
+	}
+	
 }
 
 
@@ -411,7 +450,7 @@ void lista::troca(dados pos1, dados pos2){
 
 
 void lista::remove(dados posicao){
-	noh* aux;
+	noh* aux, *remover;
 	
 	aux = acessaPos(posicao);
 
@@ -421,9 +460,12 @@ void lista::remove(dados posicao){
 		delete aux;
 	}
 	else if(posicao == _tamanho-1){
-			aux->anterior->proximo = NULL;
-			ultimo = aux->anterior;
-			delete aux;
+			 aux = acessaPos(posicao-1);
+			 remover = aux->proximo;
+			 aux->proximo = NULL;
+			 ultimo = aux;
+			 delete remover;
+			 
 	}
 	else{
 		aux->anterior->proximo = aux->proximo;
@@ -460,7 +502,7 @@ int main(){
 	
 	//novaLista + novaLista;
 	
-	novaLista.imprime();
+	//~ novaLista.imprime();
 	
 	//cout << endl;
 	
@@ -515,12 +557,27 @@ int main(){
 	
 	//cout << endl;
 	
+	//novaLista.removeRepetido();
 	
+	//cout << endl;
+	
+	//novaLista.imprime();
+
+
+	Lista2.divide(3, novaLista);
+	
+	cout << endl;
+	
+	Lista2.imprime();
+	
+	cout << endl;
 	
 	novaLista.imprime();
-
-
 	
+	//~ cout << endl;
 
+	//~ novaLista.remove(3);
 	
+	//~ novaLista.imprime();
 }
+ 
