@@ -23,6 +23,13 @@ class pilha{
 		int _tamanho;
 	public:
 		pilha();
+		void empilha(int valor);
+		int desempilha();
+		int espia();
+		void imprime();
+		void reempilha(int vetor[], int tam);
+		void xCy();
+		
 };
 
 pilha::pilha(){
@@ -30,9 +37,102 @@ pilha::pilha(){
 	_tamanho = 0;
 }
 
+void pilha::empilha(int valor){
+	noh* aux = new noh;
+	
+	aux->dado = valor;
+	aux->proximo = topo;
+	topo = aux;
+	_tamanho++;
+	
+}
+
+int pilha::desempilha(){
+	noh* aux;
+	int removido;
+	
+	removido = topo->dado;
+	aux = topo;
+	topo = topo->proximo;
+	delete aux;
+	_tamanho--;
+	
+	return removido;
+	
+}
+
+int pilha::espia(){
+	return topo->dado;
+}
+
+
+void pilha::imprime(){
+	int i = 0, tam = _tamanho;
+	int aux, vetor[tam];
+	while(_tamanho != 0){
+		cout << topo->dado << endl;
+		aux = desempilha();
+		vetor[i] = aux;
+		i++;
+	}
+	
+	reempilha(vetor, tam);
+	
+}
+
+void pilha::reempilha(int vetor[], int tam){
+	for (int i = tam-1; i >= 0; i--)
+	{
+		empilha(vetor[i]);
+	}
+}
+
+void pilha::xCy(){
+	int meio;
+	int valorMeio;
+	meio = _tamanho/2;
+	int vetor1[meio];
+	int vetor2[meio];
+	
+	bool certo = false;
+	
+	for (int i = 0; i < meio+1; i++)
+	{
+		vetor1[i] = desempilha();
+	}
+	
+	valorMeio = desempilha();
+	
+	for (int i = 0; i < meio+1; i++)
+	{
+		vetor2[i] = desempilha();
+	}
+	
+	
+}
+
 int main()
 {
+    pilha novaPilha;
     
+    int valor;
+    
+    for (int i = 0; i < 5; i++)
+	{
+		cin >> valor;
+		novaPilha.empilha(valor);
+	}
+	
+	cout << endl;
+	
+	novaPilha.imprime();
+	
+	cout << endl;
+	
+	novaPilha.imprime();
+	
+
+	
     return 0;
 }
 
