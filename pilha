@@ -29,6 +29,7 @@ class pilha{
 		void imprime();
 		void reempilha(int vetor[], int tam);
 		void xCy();
+		void ex4(int num);
 		
 };
 
@@ -88,25 +89,73 @@ void pilha::reempilha(int vetor[], int tam){
 }
 
 void pilha::xCy(){
-	int meio;
-	int valorMeio;
-	meio = _tamanho/2;
-	int vetor1[meio];
-	int vetor2[meio];
 	
-	bool certo = false;
+	int tam = _tamanho;
+	int vetor[tam];
 	
-	for (int i = 0; i < meio+1; i++)
+	bool certo = true;
+	
+	for (int i = 0; i < tam; i++)
 	{
-		vetor1[i] = desempilha();
+		vetor[i] = desempilha();
 	}
 	
-	valorMeio = desempilha();
+	int k = tam-1;
 	
-	for (int i = 0; i < meio+1; i++)
-	{
-		vetor2[i] = desempilha();
+	if(tam%2 != 0){
+		for (int i = 0; i < tam; i++){
+			if(vetor[i] == vetor[k]){
+				certo = true;
+			}
+			else{
+				i = tam;
+				certo = false;
+			}
+			k--;
+		}
+		
+		if(certo == true){
+			cout << "SIM" << endl;
+		}
+		else{
+			cout << "NÃO" << endl;
+		}
 	}
+	else{
+		cout << "NÃO" << endl;
+	}
+	
+	reempilha(vetor, tam);
+	
+	
+}
+
+void pilha::ex4(int num){
+	int aux;
+	int vetor[tam];
+	
+	bool resposta = true;
+	
+	for (int i = 0; i < num+1; i++)
+	{
+		aux = desempilha();
+		if(aux == 1){
+			resposta = true;
+		}
+		else{
+			resposta = false;
+			i = num+1;
+		}
+	}
+	
+	if(resposta){
+		
+	}
+	
+	
+	
+	
+	
 	
 	
 }
@@ -115,9 +164,13 @@ int main()
 {
     pilha novaPilha;
     
-    int valor;
+    int valor, tam, num;
     
-    for (int i = 0; i < 5; i++)
+    cin >> num;
+    
+    tam = 2*(2*num+1);
+    
+    for (int i = 0; i < tam; i++)
 	{
 		cin >> valor;
 		novaPilha.empilha(valor);
@@ -129,9 +182,9 @@ int main()
 	
 	cout << endl;
 	
-	novaPilha.imprime();
+	//novaPilha.xCy();
+	novaPilha.ex4(num);
 	
-
 	
     return 0;
 }
