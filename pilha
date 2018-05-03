@@ -1,1 +1,38 @@
+#include <iostream>
+using namespace std;
+
+class noh{
+	friend class pilha;
+
+	private:
+		int dado;
+		noh* proximo;
+	public: 
+		noh(int num = 0);
+	
+};
+
+noh::noh(int num){
+	dado = num;
+	proximo = NULL;
+}
+
+class pilha{
+	private:
+		noh* topo;
+		int _tamanho;
+	public:
+		pilha();
+};
+
+pilha::pilha(){
+	topo = NULL;
+	_tamanho = 0;
+}
+
+int main()
+{
+    
+    return 0;
+}
 
