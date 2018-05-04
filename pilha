@@ -30,6 +30,7 @@ class pilha{
 		void reempilha(int vetor[], int tam);
 		void xCy();
 		void ex4(int num);
+		void ex5(int n,int m);
 		
 };
 
@@ -131,44 +132,161 @@ void pilha::xCy(){
 }
 
 void pilha::ex4(int num){
-	int aux;
+	int tam = _tamanho;
 	int vetor[tam];
+	int aux = 0;
 	
-	bool resposta = true;
-	
-	for (int i = 0; i < num+1; i++)
+	bool certo = true;
+	for (int i = 0; i < tam; i++)
 	{
-		aux = desempilha();
-		if(aux == 1){
-			resposta = true;
+		vetor[i] = desempilha();
+	}
+	
+	while(aux < num){
+		if(vetor[aux] == 1){
+			certo = true;
 		}
 		else{
-			resposta = false;
-			i = num+1;
+			certo = false;
+			aux = num;
+		}
+		aux++;
+	}
+	aux = num;
+	if(certo){
+		if(vetor[aux] == 2){
+				aux++;
+				int index = tam-num-1;
+				while(aux < index){
+					if(vetor[aux] == 3){
+						certo = true;
+					}
+					else{
+						certo = false;
+						aux = num;
+					}
+					aux++;
+				}
+				
+				if(certo){
+					aux = tam-num-1;
+					if(vetor[aux] == 2){
+						aux++;
+						while(aux < tam){
+							if(vetor[aux] == 1){
+								certo = true;
+							}
+							else{
+								certo = false;
+								aux = num;
+							}
+						aux++;
+						}
+						if(certo){
+							cout << "VERDADEIRO" << endl;
+						}
+						else{
+							cout << "FALSO" << endl;
+						}
+					}
+				}
+				else{
+					cout << "FALSO" << endl;
+				}
+		}
+		else{
+			cout << "FALSO" << endl;
 		}
 	}
-	
-	if(resposta){
-		
+	else{
+		cout << "FALSO" << endl;
 	}
 	
+	reempilha(vetor, tam);
+}
+void pilha::ex5(int n, int m){
+	int tam = _tamanho;
+	int vetor[tam];
+	int aux = 0;
 	
+	bool certo = true;
+	for (int i = 0; i < tam; i++)
+	{
+		vetor[i] = desempilha();
+	}
 	
+	while(aux < n){
+		if(vetor[aux] == 1){
+			certo = true;
+		}
+		else{
+			certo = false;
+			aux = num;
+		}
+		aux++;
+	}
+	aux = num;
+	if(certo){
+		if(vetor[aux] == 3 or m == 0){
+				aux++;
+				int index = tam-num-1;
+				while(aux < index){
+					if(vetor[aux] == 3){
+						certo = true;
+					}
+					else{
+						certo = false;
+						aux = num;
+					}
+					aux++;
+				}
+				
+				if(certo){
+					aux = tam-num-1;
+					if(vetor[aux] == 2){
+						aux++;
+						while(aux < tam){
+							if(vetor[aux] == 1){
+								certo = true;
+							}
+							else{
+								certo = false;
+								aux = num;
+							}
+						aux++;
+						}
+						if(certo){
+							cout << "VERDADEIRO" << endl;
+						}
+						else{
+							cout << "FALSO" << endl;
+						}
+					}
+				}
+				else{
+					cout << "FALSO" << endl;
+				}
+		}
+		else{
+			cout << "FALSO" << endl;
+		}
+	}
+	else{
+		cout << "FALSO" << endl;
+	}
 	
-	
-	
-	
+	reempilha(vetor, tam);
 }
 
 int main()
 {
     pilha novaPilha;
     
-    int valor, tam, num;
+    int valor, tam, n, m;
     
-    cin >> num;
+    cin >> n >> m;
     
-    tam = 2*(2*num+1);
+    tam = 2*n+m;
     
     for (int i = 0; i < tam; i++)
 	{
@@ -183,8 +301,7 @@ int main()
 	cout << endl;
 	
 	//novaPilha.xCy();
-	novaPilha.ex4(num);
-	
+	//novaPilha.ex4(num);
 	
     return 0;
 }
