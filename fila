@@ -1,1 +1,72 @@
+#include <iostream>
+using namespace std;
+
+typedef int Dado;
+class noh{
+	friend class fila;
+	private:
+		Dado dado;
+		noh* proximo;
+	public:
+		noh(Dado num);
+};
+
+noh::noh(Dado num){
+	dado = num;
+	proximo = NULL;
+}
+
+class fila{
+	private: 
+		noh* inicio;
+		noh* fim;
+		int tamanho;
+	public:
+		fila();
+		void enfileira(Dado valor);
+		void desenfileira();
+};
+
+fila::fila(){
+	inicio = NULL;
+	fim = NULL;
+	tamanho = 0;
+}
+
+void fila::enfileira(Dado valor){
+	noh* aux = new noh(valor);
+	
+	
+	if(inicio == NULL){
+		inicio = aux;
+		fim = aux;
+	}
+	else{
+		fim->proximo = aux;
+		fim = aux;
+	}
+}
+int fila::desenfileira(){
+	noh* aux = primeiro;
+	int removido = primeiro->dado;
+	
+	
+}
+
+int main()
+{
+    fila novaFila;
+    
+    Dado valor, tam;
+    
+    cin >> tam;
+    
+    for (int i = 0; i < tam; i++)
+	{
+		cin >> valor;
+		novaFila.enfileira(valor);
+	}
+	
+    return 0;
+}
 
