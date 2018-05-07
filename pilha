@@ -91,192 +91,23 @@ void pilha::reempilha(int vetor[], int tam){
 
 void pilha::xCy(){
 	
-	int tam = _tamanho;
-	int vetor[tam];
+	pilha umaPilha;
 	
-	bool certo = true;
+	bool resposta = true;
 	
-	for (int i = 0; i < tam; i++)
-	{
-		vetor[i] = desempilha();
+	while(topo->dado != 3){
+		umaPilha.empilha(desempilha());
 	}
 	
-	int k = tam-1;
-	
-	if(tam%2 != 0){
-		for (int i = 0; i < tam; i++){
-			if(vetor[i] == vetor[k]){
-				certo = true;
-			}
-			else{
-				i = tam;
-				certo = false;
-			}
-			k--;
-		}
+	while(resposta){
+		if()
 		
-		if(certo == true){
-			cout << "SIM" << endl;
-		}
-		else{
-			cout << "NÃO" << endl;
-		}
 	}
-	else{
-		cout << "NÃO" << endl;
-	}
-	
-	reempilha(vetor, tam);
-	
 	
 }
 
-void pilha::ex4(int num){
-	int tam = _tamanho;
-	int vetor[tam];
-	int aux = 0;
-	
-	bool certo = true;
-	for (int i = 0; i < tam; i++)
-	{
-		vetor[i] = desempilha();
-	}
-	
-	while(aux < num){
-		if(vetor[aux] == 1){
-			certo = true;
-		}
-		else{
-			certo = false;
-			aux = num;
-		}
-		aux++;
-	}
-	aux = num;
-	if(certo){
-		if(vetor[aux] == 2){
-				aux++;
-				int index = tam-num-1;
-				while(aux < index){
-					if(vetor[aux] == 3){
-						certo = true;
-					}
-					else{
-						certo = false;
-						aux = num;
-					}
-					aux++;
-				}
-				
-				if(certo){
-					aux = tam-num-1;
-					if(vetor[aux] == 2){
-						aux++;
-						while(aux < tam){
-							if(vetor[aux] == 1){
-								certo = true;
-							}
-							else{
-								certo = false;
-								aux = num;
-							}
-						aux++;
-						}
-						if(certo){
-							cout << "VERDADEIRO" << endl;
-						}
-						else{
-							cout << "FALSO" << endl;
-						}
-					}
-				}
-				else{
-					cout << "FALSO" << endl;
-				}
-		}
-		else{
-			cout << "FALSO" << endl;
-		}
-	}
-	else{
-		cout << "FALSO" << endl;
-	}
-	
-	reempilha(vetor, tam);
-}
-void pilha::ex5(int n, int m){
-	int tam = _tamanho;
-	int vetor[tam];
-	int aux = 0;
-	
-	bool certo = true;
-	for (int i = 0; i < tam; i++)
-	{
-		vetor[i] = desempilha();
-	}
-	
-	while(aux < n){
-		if(vetor[aux] == 1){
-			certo = true;
-		}
-		else{
-			certo = false;
-			aux = num;
-		}
-		aux++;
-	}
-	aux = num;
-	if(certo){
-		if(vetor[aux] == 3 or m == 0){
-				aux++;
-				int index = tam-num-1;
-				while(aux < index){
-					if(vetor[aux] == 3){
-						certo = true;
-					}
-					else{
-						certo = false;
-						aux = num;
-					}
-					aux++;
-				}
-				
-				if(certo){
-					aux = tam-num-1;
-					if(vetor[aux] == 2){
-						aux++;
-						while(aux < tam){
-							if(vetor[aux] == 1){
-								certo = true;
-							}
-							else{
-								certo = false;
-								aux = num;
-							}
-						aux++;
-						}
-						if(certo){
-							cout << "VERDADEIRO" << endl;
-						}
-						else{
-							cout << "FALSO" << endl;
-						}
-					}
-				}
-				else{
-					cout << "FALSO" << endl;
-				}
-		}
-		else{
-			cout << "FALSO" << endl;
-		}
-	}
-	else{
-		cout << "FALSO" << endl;
-	}
-	
-	reempilha(vetor, tam);
-}
+
+
 
 int main()
 {
