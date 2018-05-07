@@ -24,7 +24,14 @@ class fila{
 	public:
 		fila();
 		void enfileira(Dado valor);
-		void desenfileira();
+		void enfileiraEsq(Dado valor);
+		void enfileiraDir(Dado valor);
+		int desenfileira();
+		int desenfileiraEsq();
+		int desenfileiraDir();
+		void imprime();
+		bool vazia();
+		void reenfileira(int vetor[], int tam);
 };
 
 fila::fila(){
@@ -41,15 +48,113 @@ void fila::enfileira(Dado valor){
 		inicio = aux;
 		fim = aux;
 	}
+	
 	else{
 		fim->proximo = aux;
 		fim = aux;
 	}
+	
+	tamanho++;
+}
+void fila::enfileiraEsq(Dado valor){
+	noh* aux = new noh(valor);
+	
+	
+	if(inicio == NULL){
+		inicio = aux;
+		fim = aux;
+	}
+	
+	else{
+		fim->proximo = aux;
+		fim = aux;
+	}
+	
+	tamanho++;
+}
+void fila::enfileiraDir(Dado valor){
+	noh* aux = new noh(valor);
+	
+	
+	if(inicio == NULL){
+		inicio = aux;
+		fim = aux;
+	}
+	
+	else{
+		aux->proximo = inicio;
+		inicio = aux;
+	}
+	
+	tamanho++;
 }
 int fila::desenfileira(){
-	noh* aux = primeiro;
-	int removido = primeiro->dado;
+	noh* aux = inicio;
+	int removido = inicio->dado;
 	
+	inicio = inicio->proximo;
+	
+	delete aux;
+	
+	tamanho--;
+	
+	return removido;
+	
+}
+int fila::desenfileiraEsq(){
+	noh* aux = fim;
+	int removido;
+	int tam = tamanho;
+	int vetor[tam], i = 0;
+	
+	cout << inicio->dado << "dsd" << endl;
+	
+	while(aux != fim){
+		vetor[i] = desenfileira();
+		cout << vetor[i] << endl;
+		aux = aux->proximo;
+		i++;
+	}
+	
+	removido = fim->dado;
+	fim = aux;
+	aux = aux->proximo;
+	
+	delete aux;
+	
+	reenfileira(vetor, tam-1);
+	
+	return removido;
+	
+
+	
+}
+
+bool fila::vazia(){
+	return (inicio == NULL);
+}
+
+void fila::reenfileira(int vetor[], int tam){
+	for (int i = 0; i < tam; i++)
+	{
+		enfileiraDir(vetor[i]);
+	}
+	
+}
+
+void fila::imprime(){
+	int tam = tamanho-1;
+	int vetor[tam], i = 0;
+	
+	cout << inicio->dado << "dsd" << endl;
+	
+	while(tamanho != 0){
+		cout << inicio->dado << endl;
+		vetor[i] = desenfileira();
+		i++;
+	}
+	
+	reenfileira(vetor, tam);
 	
 }
 
@@ -57,7 +162,7 @@ int main()
 {
     fila novaFila;
     
-    Dado valor, tam;
+    Dado valor, tam, num;
     
     cin >> tam;
     
@@ -66,6 +171,19 @@ int main()
 		cin >> valor;
 		novaFila.enfileira(valor);
 	}
+	
+	cout << endl;
+	
+	novaFila.imprime();
+	
+	cout << endl;
+	
+	num = novaFila.desenfileiraEsq();
+	
+	cout << endl << num << endl;
+	
+	novaFila.imprime();
+	
 	
     return 0;
 }
