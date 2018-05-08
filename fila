@@ -4,7 +4,6 @@ using namespace std;
 typedef int Dado;
 class noh{
 	friend class fila;
-	friend class fila2;
 	private:
 		Dado dado;
 		noh* proximo;
@@ -19,7 +18,6 @@ noh::noh(Dado num){
 
 
 class fila{
-	friend class fila2;
 	private: 
 		noh* inicio;
 		noh* fim;
@@ -31,6 +29,7 @@ class fila{
 		void imprime();
 		bool vazia();
 		void reenfileira(fila umaFila);
+		void empilhando(int tam);
 };
 
 fila::fila(){
@@ -69,6 +68,29 @@ int fila::desenfileira(){
 	return removido;
 	
 }
+void fila::empilhando(int tam){
+	fila umaFila;
+	noh* aux = inicio;
+	noh* aux2 = inicio;
+	
+	while(tamanho > 0){
+		if(aux == fim){
+			cout << aux->dado << endl;
+		}
+		else{
+			while(aux != fim){
+				cout << aux->dado << endl;
+				aux = aux->proximo;
+			}
+		}
+		
+		umaFila.enfileira(aux->dado);
+		delete aux;
+		aux = inicio;
+		tamanho--;	
+		cout << endl;
+	}
+}
 
 bool fila::vazia(){
 	return (inicio == NULL);
@@ -82,10 +104,11 @@ void fila::imprime(){
 	
 	noh* aux = inicio;
 	
-	while(aux != NULL){
-		cout << aux->dado << endl;
-		aux = aux->proximo;
-	}
+	
+		while(aux != NULL){
+			cout << aux->dado << endl;
+			aux = aux->proximo;
+		}
 	
 	
 }
@@ -110,7 +133,7 @@ int main()
 	
 	cout << endl;
 	
-	novaFila.imprime();
+	novaFila.empilhando(tam);
 	
 	
     return 0;
