@@ -99,9 +99,27 @@ void pilha::xCy(){
 		umaPilha.empilha(desempilha());
 	}
 	
-	while(resposta){
-		if()
+	desempilha();
+	
+	while(resposta and topo != NULL){
+		cout << topo->dado << " " << umaPilha.topo->dado << endl;
 		
+		if(topo->dado == umaPilha.topo->dado){
+			resposta = true;
+		}
+		else{
+			resposta = false;
+		}
+		
+		desempilha();
+		umaPilha.desempilha();
+	}
+	
+	if(resposta){
+		cout << "VERDADEIRO" <<	endl;
+	}
+	else{
+		cout << "FALSO" <<	endl;
 	}
 	
 }
@@ -115,11 +133,11 @@ int main()
     
     int valor, tam, n, m;
     
-    cin >> n >> m;
+    //cin >> n >> m;
     
-    tam = 2*n+m;
     
-    for (int i = 0; i < tam; i++)
+    
+    for (int i = 0; i < 5; i++)
 	{
 		cin >> valor;
 		novaPilha.empilha(valor);
@@ -131,7 +149,7 @@ int main()
 	
 	cout << endl;
 	
-	//novaPilha.xCy();
+	novaPilha.xCy();
 	//novaPilha.ex4(num);
 	
     return 0;
