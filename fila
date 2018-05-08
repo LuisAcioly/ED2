@@ -71,25 +71,24 @@ int fila::desenfileira(){
 void fila::empilhando(int tam){
 	fila umaFila;
 	noh* aux = inicio;
-	noh* aux2 = inicio;
 	
-	while(tamanho > 0){
-		if(aux == fim){
-			cout << aux->dado << endl;
-		}
-		else{
-			while(aux != fim){
-				cout << aux->dado << endl;
+		while(inicio != fim){
+			while(aux->proximo != fim){
 				aux = aux->proximo;
 			}
+				cout << endl;
+				umaFila.enfileira(fim->dado);
+				fim = aux;
+				delete aux->proximo;
+				aux = inicio;
+				tamanho--;	
 		}
 		
-		umaFila.enfileira(aux->dado);
-		delete aux;
-		aux = inicio;
-		tamanho--;	
-		cout << endl;
-	}
+		umaFila.enfileira(inicio->dado);
+		inicio = NULL;
+		fim = NULL;
+			
+		umaFila.imprime();
 }
 
 bool fila::vazia(){
