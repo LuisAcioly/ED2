@@ -25,6 +25,16 @@ pilhav::pilhav(int num){
 	topo = -1;
 }
 
+void pilhav::empilha(dado num){
+	if((topo+capacidade)%capacidade == capacidade-1){
+		cerr << "FILA CHEIA" << endl;
+	}
+	
+	topo = (topo+1)%capacidade;
+	vetor[topo] = num;
+	inseridos++;
+}
+
 int main()
 {
     
