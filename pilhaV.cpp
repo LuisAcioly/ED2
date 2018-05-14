@@ -27,12 +27,20 @@ pilhav::pilhav(int num){
 
 void pilhav::empilha(dado num){
 	if((topo+capacidade)%capacidade == capacidade-1){
-		cerr << "FILA CHEIA" << endl;
+		cerr << "PILHA CHEIA" << endl;
 	}
 	
 	topo = (topo+1)%capacidade;
 	vetor[topo] = num;
 	inseridos++;
+}
+
+void pilhav::imprime(){
+		for (int i = inseridos; i <= 0; i--)
+		{
+			cout << vetor[i] << endl;
+		}
+		
 }
 
 int main()
