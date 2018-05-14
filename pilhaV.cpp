@@ -27,7 +27,9 @@ pilhav::pilhav(int num){
 
 void pilhav::empilha(dado num){
 	if((topo+capacidade)%capacidade == capacidade-1){
-		cerr << "PILHA CHEIA" << endl;
+		cerr << "PILHA CHEIA" << endl;if(inseridos == 0){
+		cerr << "FILA VAZIA" << endl;
+	}
 	}
 	
 	topo = (topo+1)%capacidade;
@@ -42,6 +44,8 @@ void pilhav::imprime(){
 		}
 		
 }
+
+dado 
 
 int main()
 {
