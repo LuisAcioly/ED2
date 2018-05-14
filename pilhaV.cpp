@@ -45,6 +45,16 @@ void pilhav::imprime(){
 
 int main()
 {
+	int num, valor;
+	cin >> num;
+	pilhav minhaPilha(num);
+	
+	for (int i = 0; i < num; i++)
+	{
+		cin >> valor;
+		minhaPilha.empilha(valor)
+	}
+	
     
     return 0;
 }
