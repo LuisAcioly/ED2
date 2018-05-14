@@ -6,8 +6,8 @@ typedef int dado;
 class pilhav{
 	private:
 		int capacidade;
-		dado *dados;
-		int tamanho;
+		dado *vetor;
+		int inseridos;
 		int topo;
 	public:
 		pilhav(int num);
@@ -17,6 +17,13 @@ class pilhav{
 		void imprime();
 		void info();
 };
+
+pilhav::pilhav(int num){
+	capacidade = num;
+	vetor = new int [capacidade];
+	inseridos = 0;
+	topo = -1;
+}
 
 int main()
 {
