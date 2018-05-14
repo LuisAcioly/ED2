@@ -3,90 +3,98 @@ using namespace std;
 
 typedef int dado;
 
-class calculadora{
-	private:
-		int capacidade;
-		dado *vetor;
-		char* operadores;
-		int numerosInseridos;
-		int operadoresInseridos;
-		int topo;
-	public:
-		calculadora(int num);
-		void empilha(dado valor);
-		dado desempilha();
-		dado espia();
-		void imprime();
-		void info();
+class noh{
+	friend class calculadora;
+	private :
+		char valor;
+		noh* proximo;
+	public :
+		noh();
 };
 
-calculadora::calculadora(int num){
-	capacidade = 100;
-	vetor = new int [capacidade];
-	operadores = new char [capacidade];
-	numerosInseridos = 0;
-	operadoresInseridos = 0;
-	topo1 = -1;
-	topo2 = -1;
+noh::noh(){
+	valor = '0';
+	proximo = NULL;
 }
 
-void calculadora::empilha(dado num){
-	if((capacidade)%capacidade == capacidade-1){
-		cerr << "PILHA CHEIA" << endl;
-	}
-	
-	topo = (topo-1)%capacidade;
-	vetor[topo] = num;
-	numerosInseridos++;
+class calculadora{
+	private:
+		noh* topo;
+		int _tamanho;
+	public:
+		calculadora(int tam = 0);
+		void empilha(char num);
+		char desempilha();
+		void reempilha(calculadora temporario);
+		void imprime();
+		void calculo();
+};
+
+calculadora::calculadora(int tam){
+	topo = NULL;
+	_tamanho = tam;
 }
-void calculadora::empilhaOperador(char operador){
-	if((capacidade)%capacidade == capacidade-1){
-		cerr << "PILHA CHEIA" << endl;
-	}
+
+void calculadora::empilha(char num){
+	noh* aux = new noh;
 	
-	topo = (topo-1)%capacidade;
-	operadores[topo] = operador;
-	operadoresInseridos++;
+	aux->valor = num;
+	aux->proximo = topo;
+	topo = aux;
+	_tamanho++;
+	
+}
+
+void calculadora::reempilha(calculadora temporario){
+	for (int i = 4; i >= 0; i--)
+	{
+		empilha(temporario.desempilha());
+	}
+}
+
+char calculadora::desempilha(){
+	noh* aux;
+	char removido;
+	
+	removido = topo->valor;
+	aux = topo;
+	topo = topo->proximo;
+	delete aux;
+	_tamanho--;
+	
+	return removido;
+	
 }
 
 void calculadora::imprime(){
-		for (int i = numerosInseridos; i <= 0; i--)
-		{
-			cout << vetor[i] << endl;
-		}
-		
+
+	
+	for (int i = 0; i < 5; i++)
+	{
+		cout << topo->valor << endl;
+		desempilha();
+	}
+	
 }
 
-dado calculadora::desempilha(){
-	if(numerosInseridos == 0){
-		cerr << "PILHA VAZIA" << endl;
-	}
+void calculadora::calculo(){
 	
-	dado aux = vetor[topo];
-	
-	if(topo == 0){
-		topo = -1;
-	}
-	else{
-		topo = (topo-1)%capacidade;
-	}
-	
-	numerosInseridos--;
-	
-	return aux;
 }
 
 int main()
 {
-	int num, valor;
-	cin >> num;
-	calculadora minhaPilha(num);
+	char num;
 	
-	for (int i = 0; i < num; i++)
+	calculadora pilhaTemp;
+	calculadora pilhaCal;
+    
+    for (int i = 0; i < 5; i++)
 	{
-		cin >> valor;
-		minhaPilha.empilha(valor);
+		cin >> num;
+		pilhaTemp.empilha(num);
 	}
+	
+	pilhaCal.reempilha(pilhaTemp);
 	
     
     return 0;
