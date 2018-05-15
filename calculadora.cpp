@@ -56,12 +56,20 @@ char calculadora::desempilha(){
 	noh* aux;
 	char removido;
 	
-	removido = topo->valor;
-	aux = topo;
-	topo = topo->proximo;
-	delete aux;
-	_tamanho--;
-	
+	if(_tamanho == 1){
+		removido = topo->valor;
+		aux = topo;
+		topo = NULL;
+		delete aux;
+		_tamanho = 0;
+	}
+	else{
+		removido = topo->valor;
+		aux = topo;
+		topo = topo->proximo;
+		delete aux;
+		_tamanho--;
+	}
 	return removido;
 	
 }
@@ -78,7 +86,31 @@ void calculadora::imprime(){
 }
 
 void calculadora::calculo(){
+	int result, num, tam = _tamanho;
 	
+	result = desempilha() - 48;
+	
+	for(int i = 0; i < tam; i++){
+		cout << _tamanho << "tamanho" << endl;
+		
+		if(topo->valor == '+'){
+			result = result + num;
+			cout << result  << endl;
+		}
+		if(topo->valor == '-'){
+			result = result - num;
+		}
+		if(topo->valor == '*'){
+			result = result * num;
+		}
+		if(topo->valor == '/'){
+			result = result / num;
+		}
+		else{
+			num = desempilha() - 48;
+			
+		}
+	}
 }
 
 int main()
@@ -95,6 +127,7 @@ int main()
 	}
 	
 	pilhaCal.reempilha(pilhaTemp);
+	pilhaCal.calculo();
 	
     
     return 0;
