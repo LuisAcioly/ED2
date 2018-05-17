@@ -1,4 +1,4 @@
-#ifdef HEAP_HPP
+#ifndef HEAP_HPP
 #define HEAP_HPP
 
 typedef int data;
@@ -19,7 +19,7 @@ class maxHeap{
 		maxHeap(data vetor[], int tam, int cap = 0);
 		void imprime();
 		void insere(data dado);
-		data espiaRaiz();
+		inline data espiaRaiz();
 		data removeRaiz();
 	
 };
