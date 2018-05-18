@@ -16,6 +16,11 @@ int main()
 	
 	heap.imprime();
 	
+	heap.heapsort();
+	
+	cout << endl;
+	
+	heap.imprime();
 	
     return 0;
 }

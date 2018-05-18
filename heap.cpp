@@ -18,7 +18,7 @@ void maxHeap::insere(data dado){
 	}
 	
 	heap[inseridos] = dado;
-	corrigeDescendo(inseridos);
+	corrigeSubindo(inseridos);
 	inseridos++;
 }
 
@@ -82,7 +82,7 @@ data maxHeap::espiaRaiz(){
 void maxHeap::imprime(){
 	arruma();
 	
-	for (int i = 0; i < inseridos; i++)
+	for (int i = 0; i < capacidade; i++)
 	{
 		cout << "[" << heap[i] << "]";
 	}
@@ -95,4 +95,12 @@ void maxHeap::arruma(){
 		corrigeDescendo(i);
 	}
 	
+}
+
+void maxHeap::heapsort(){
+	while(inseridos != 1){
+			swap(heap[0], heap[inseridos-1]);
+			inseridos--;
+			corrigeDescendo(0);
+	}
 }

@@ -21,7 +21,7 @@ class maxHeap{
 		void insere(data dado);
 		inline data espiaRaiz();
 		data removeRaiz();
-	
+		void heapsort();
 };
 
 #endif
