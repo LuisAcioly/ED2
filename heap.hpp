@@ -22,6 +22,9 @@ class maxHeap{
 		inline data espiaRaiz();
 		data removeRaiz();
 		void heapsort();
+		void torneio();
+		void insereTAD(data vetor[], int tam);
+		void inserePos(data dado, int i);
 };
 
 #endif
