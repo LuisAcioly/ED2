@@ -4,21 +4,16 @@ using namespace std;
 
 int main()
 {
-    maxHeap heap(10);
+    data vetor[16] = {12, 4, 5, 8, 51, 45 , 24, 9, 11, 31, 13, 19, 17, 2, 7, 18};
     
-    data num;
+    int tam = 16*2-1;
     
-    for (int i = 0; i < 10; i++)
-	{
-		cin >> num;
-		heap.insere(num);
-	}
+    maxHeap heap(tam);
+    
+ 
+	heap.insereTAD(vetor, 16);
 	
-	heap.imprime();
-	
-	heap.heapsort();
-	
-	cout << endl;
+	heap.torneio();
 	
 	heap.imprime();
 	
