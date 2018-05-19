@@ -21,6 +21,15 @@ void maxHeap::insere(data dado){
 	corrigeSubindo(inseridos);
 	inseridos++;
 }
+void maxHeap::inserePos(data dado, int i){
+	if(inseridos == capacidade){
+		cout << "Erro ao inserir" << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	heap[i] = dado;
+	inseridos++;
+}
 
 void maxHeap::corrigeSubindo(int i){
 	int p = pai(i);
@@ -93,6 +102,35 @@ void maxHeap::arruma(){
 	for (int i = inseridos/2-1; i >= 0; i--)
 	{
 		corrigeDescendo(i);
+	}
+	
+}
+void maxHeap::torneio(){
+	int esq, dir,maior;
+	for (int i = capacidade/2-1; i >= 0; i--)
+	{
+		esq = esquerdo(i);
+		dir = direito(i);
+		maior = i;
+		if(heap[esq] > heap[dir]){
+			maior = esq;
+		}
+		else{
+			maior = dir;
+		}
+		heap[i] = heap[maior];
+	}
+	
+}
+
+void maxHeap::insereTAD(data vetor[], int tam){
+	int aux, j;
+	aux = (capacidade-1)-(tam-1);
+	j = 0;
+	for (int i = aux; i < capacidade; i++)
+	{
+		inserePos(vetor[j], i);
+		j++;
 	}
 	
 }
