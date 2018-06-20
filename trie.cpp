@@ -62,24 +62,24 @@ void trie::insert(Data word, int position){
     
     for(int i = 0; i < bits; i++)
     {
-        //cout << triePosition[i] << endl;
         if(triePosition[i] == 1){
             j = rigth(j);
             if(trieArray[j].key == -1){
                 trieArray[j].key = 1;
             }
-            //cout << j << "/ " << trieArray[j].key << endl;
         }
         else if(triePosition[i] == 0){
             j = left(j);
             if(trieArray[j].key == -1){
                 trieArray[j].key = 0;
             }
-            //cout << j << "/ " << trieArray[j].key << endl;
         }
     }
 
+
     trieArray[j].value = word;
+    size++;
+
 }
 
 void trie::spyPosition(int position){
@@ -89,7 +89,7 @@ void trie::spyPosition(int position){
     
     for(int i = 0; i < bits; i++)
     {
-        if(trieArray[j].key == -1){
+        if(trieArray[j].key == -1 and j != 0){
             cout << "Position don't exist" << endl;
             exit(EXIT_FAILURE);
         }
@@ -105,16 +105,14 @@ void trie::spyPosition(int position){
 }
 
 int* trie::convertToBinary(int position, int* bits){
-    *bits = log2(position+1);
+    *bits = log2(position+1)+1;
 
     int* BinArray = new int[*bits];
     
     for(int i = 0; i < *bits; i++)
     {
         BinArray[i] = position % 2;
-        cout << i << ": " << position%2 << "/";
-        cout << position/2 << endl;
-        position = position/2;
+        position /= 2;
     }
 
     return BinArray;
