@@ -1,0 +1,308 @@
+#include <iostream>
+
+using namespace std;
+
+typedef int Data;
+
+class noh{
+    friend class lista;
+    private:
+        noh* proximo;
+        noh* anterior;
+        Data valor;
+    public:
+        noh(Data temp = 0);
+};
+
+noh::noh(Data temp){
+    proximo = NULL;
+    anterior = NULL;
+    valor = temp;
+}
+
+class lista{
+    private:    
+        int inseridos;
+        noh* primeiro;
+        noh* ultimo;
+        noh* get(int pos); 
+    public:
+        lista();
+        void inserirInicio(Data dado);
+        void inserirFim(Data dado);
+        void inserirPosicao(Data dado, int pos);
+        void imprimi();
+        void imprimiReverso();
+        void troca(int pos1, int pos2); // não terminei
+        void remove(int pos);
+        void procura(Data dado);
+};
+
+lista::lista(){
+    inseridos = 0;
+    primeiro = NULL;
+    ultimo = NULL;
+}
+
+noh* lista::get(int pos){
+    int aux = 0;
+    noh* atual = primeiro;
+    while(aux != pos){
+            atual = atual->proximo;
+            aux++;
+    }
+
+    return atual;
+}
+
+void lista::inserirInicio(Data dado){
+    noh* novo = new noh(dado);
+
+    if(inseridos == 0){
+        primeiro = novo;
+        ultimo = novo;
+    }
+    else{
+        novo->proximo = primeiro;
+        primeiro->anterior = novo;
+        primeiro = novo;
+    }
+
+    inseridos++;
+}
+
+
+void lista::inserirFim(Data dado){
+    noh* novo = new noh(dado);
+
+    if(inseridos == 0){
+        primeiro = novo;
+        ultimo = novo;
+    }
+    else{
+        novo->anterior = ultimo;
+        ultimo->proximo = novo;
+        ultimo = novo;
+    }
+
+    inseridos++;
+}
+
+void lista::inserirPosicao(Data dado, int pos){
+
+    if(pos == 0){
+        inserirInicio(dado);
+    }
+    else if(pos == inseridos-1){
+        inserirFim(dado);
+    }
+    else{
+        noh* novo = new noh(dado);
+        noh* atual = get(pos);
+
+        novo->anterior = atual->anterior;
+        atual->anterior->proximo = novo;
+        novo->proximo = atual;
+        atual->anterior = novo;
+
+        inseridos++;
+    }
+}
+
+void lista::imprimi(){
+    noh* aux = primeiro;
+
+    while(aux != NULL){
+        cout << aux->valor << " ";
+        aux = aux->proximo;
+    }
+}
+
+void lista::imprimiReverso(){
+    noh* aux = ultimo;
+
+    while(aux != NULL){
+        cout << aux->valor << " ";
+        aux = aux->anterior;
+    }
+}
+
+void lista::troca(int pos1,int pos2){
+    int posAux = 0;
+
+    noh* auxUm:
+    noh* auxDois;
+    noh* auxP;
+    noh* auxPdois;
+
+    if(pos1 == 0 and pos2 == inseridos-1){
+        auxUm = primeiro;
+        auxDois = ultimo;
+        auxUm->anterior = auxDois->anterior;
+        auxDois->anterior->proximo = auxUm;
+        auxDois->anterior = NULL;
+        auxDois->proximo = auxUm->proximo;
+        auxUm->proximo->anterior = auxDois;
+        auxUm->proximo = NULL;
+        primeiro = auxDois;
+        ultimo = auxUm;
+    }
+
+    else if(pos1 == pos2-1){
+        if(pos1 == 0){
+            auxUm = primeiro;
+            auxDois = primeiro->proximo;
+            auxUm->proximo = auxDois->proximo;
+            auxDois->proximo->anterior = auxUm;
+            auxDois->proximo = auxUm;
+            auxUm->anterior = auxDois;
+            auxDois->anterior = NULL;
+            primeiro = auxDois;
+        }
+        else if(pos2 == inseridos-1){
+            auxDois = ultimo;
+            auxUm = ultimo->anterior;
+            auxDois->anterior = auxUm->anterior;
+            auxUm->anterior->proximo = auxDois;
+            auxDois->proximo = auxUm;
+            auxUm->anterior = auxDois;
+            auxUm->proximo = NULL;
+            ultimo = auxUm;
+        }
+
+        else{
+            auxUm = get(pos1);
+            auxDois = get(pos2);
+            auxUm->proximo = auxDois->proximo;
+            auxDois->proximo->anterior = auxUm;
+            auxDois->anterior = auxUm->anterior;
+            auxUm->anterior->proximo = auxDois;
+            auxDois->anterior = auxUm;
+            auxUm->proximo = auxDois;
+        }
+    }
+
+    else{
+        if(pos1 == 0){
+            auxUm = primeiro;
+            auxDois = get(pos2);
+            auxP = auxUm->proximo;
+            auxUm->proximo = auxDois->proximo;
+            auxDois->proximo->anterior = auxUm;
+            auxUm->anterior = auxDois->anterior;
+            auxDois->anterior->proximo = auxUm;
+            auxDois->proximo = auxP;
+            auxP->anterior = auxDois;
+            auxDois->anterior = NULL;
+            primeiro = auxDois;
+        }
+        else if(pos2 == inseridos-1){
+            auxDois = ultimo;
+            auxUm = get(pos1);
+            auxP = auxDois->anterior;
+            auxDois->anterior = auxUm->anterior;
+            auxUm->anterior->proximo = auxDois;
+            auxDois->proximo = auxUm->proximo;
+            auxUm->proximo->anterior = auxDois;
+            auxUm->anterior = auxP;
+            auxP->proximo = auxUm;
+            auxUm->proximo = NULL;
+            ultimo = auxUm;
+        }
+        else{
+            auxUm = get(pos1);
+            auxDois = get(pos2);
+            auxP = auxUm->proximo;
+            auxPdois = auxDois->anterior;
+            auxUm->proximo = auxDois->proximo;
+            auxDois->proximo->anterior = auxUm;
+            auxDois->anterior = auxUm->anterior;
+            auxUm->anterior->proximo = auxDois;
+            auxUm->anterior = auxPdois;
+            auxPdois->proximo = auxUm;
+            auxDois->proximo = auxP;
+            auxP->anterior = auxDois;
+        }
+
+    }
+
+}
+
+void lista::remove(int pos){
+        noh* atual;
+
+        if(pos == 0){
+            atual = primeiro;
+            atual->proximo->anterior = NULL;
+            primeiro = atual->proximo;
+            delete atual;
+        }
+
+        else if(pos == inseridos-1){
+            atual = ultimo;
+            atual->anterior->proximo = NULL;
+            ultimo = atual->anterior;
+            delete atual;
+        }
+
+        else{
+            atual = get(pos);
+
+            atual->proximo->anterior = atual->anterior;
+            atual->anterior->proximo = atual->proximo;
+
+            delete atual;
+        }
+}
+
+void lista::procura(Data dado){
+    int aux = 0;
+
+    noh* atual = primeiro;
+
+    int achou = -1;
+
+    while(atual != NULL){
+        cout << "loop" << endl;
+        if(atual->valor != dado){
+            atual = atual->proximo;
+            aux++;
+        }
+        else{
+            achou = atual->valor;
+        }
+    }
+
+    if(achou == -1){
+        cout << "Valor Inexistente!" << endl;
+    }
+    else{
+        cout << achou << endl;
+    }
+
+}
+
+
+int main (){
+
+    lista umaLista;
+
+    Data dado;
+    
+    for(int i = 0; i < 5; i++)
+    {
+        umaLista.inserirInicio(i);
+    }
+    
+    umaLista.imprimi();
+
+    umaLista.troca(0, 1);
+
+    cout << endl;
+
+    umaLista.imprimi();
+
+    cout << endl;
+
+    return 0;
+}
