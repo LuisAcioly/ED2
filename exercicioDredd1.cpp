@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -81,20 +82,22 @@ void lista::insere(Dado dado, int posicao) {
     noh* novo = new noh(dado);
     noh* aux = primeiro;
     int i = 0;
-    if(tamanho == 0){
-        primeiro = novo;
-        ultimo = novo;
-    }
-    else{
-        while(i != posicao-1){
-            aux = aux->proximo;
-            i++;
-        }
+	if(posicao >= 0 && posicao < tamanho){	
+		if(tamanho == 0){
+			primeiro = novo;
+			ultimo = novo;
+		}
+		else{
+			while(i != posicao-1){
+				aux = aux->proximo;
+				i++;
+			}
 
-        novo->proximo = aux->proximo;
-        aux->proximo = novo;
-        
-    }
+			novo->proximo = aux->proximo;
+			aux->proximo = novo;
+			
+		}
+	}
 
     tamanho++;
 }
@@ -106,13 +109,36 @@ void lista::remove(int posicao) {
     noh* removido;
     int i = 0;
      
-     while(i != posicao-1){
-            aux = aux->proximo;
-            i++;
-        }
-    removido = aux->proximo;
-    aux->proximo = removido->proximo;
-    delete removido;
+    if(posicao >= 0 && posicao < tamanho){
+		 if(posicao == 0){
+			primeiro = primeiro->proximo;
+			delete aux;
+		 }
+		 else if(posicao == tamanho-1){
+			 while(i != tamanho-2){
+				 aux = aux->proximo;
+				 i++;
+			 }
+			 removido = ultimo;
+			 ultimo = aux;
+			 ultimo->proximo = NULL;
+			 delete removido;
+		 }
+		 else{
+			 while(i != posicao-1){
+				aux = aux->proximo;
+				i++;
+			}
+			
+			removido = aux->proximo;
+			aux->proximo = removido->proximo;
+			delete removido;
+			
+		 }
+		 
+	 }
+	 
+	 tamanho--;
     
 }
 
@@ -135,7 +161,7 @@ int lista::procura(Dado valor) {
 
 // verifica se a lista estÃ¡ vazia
 inline bool lista::vazia() {
-    // Implemente aqui
+   return (primeiro == NULL);
 }
 
 int main() { // NÃƒO MODIFIQUE!
@@ -171,3 +197,4 @@ int main() { // NÃƒO MODIFIQUE!
     minhaLista.imprime();
     return 0;
 }
+
