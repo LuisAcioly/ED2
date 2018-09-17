@@ -20,21 +20,24 @@ class lista{
         noh* mUltimo;
         int mTamanho;
         void inserir(int num);
+        noh* josephusAux(noh* aux, int num);
     public:
         lista(int num);
         void imprimir();
+        int josephus(int num);
+        void remover(noh* aux, noh* temp);
 };
 
 lista::lista(int num){
     mPrimeiro = NULL;
     mUltimo = NULL;
+    mTamanho = 0;
     
     for(int i = 1; i < num+1; i++)
     {   
-        cout << "a" << endl;
         inserir(i);
     }
-
+    
     mUltimo->proximo = mPrimeiro;
 }
 
@@ -42,12 +45,10 @@ void lista::inserir(int num){
     noh* novo = new noh(num);
 
     if(mTamanho == 0){
-        cout << "b" << endl;
         mPrimeiro = novo;
         mUltimo = novo;
     }
     else{
-        cout << "b" << endl;
         mUltimo->proximo = novo;
         mUltimo = novo;
     }
@@ -57,7 +58,7 @@ void lista::inserir(int num){
 
 void lista::imprimir(){
     noh* aux = mPrimeiro;
-
+    
     
     for(int i = 0; i < mTamanho; i++)
     {
@@ -67,6 +68,53 @@ void lista::imprimir(){
     
 }
 
+int lista::josephus(int num){
+	noh* aux = josephusAux(mPrimeiro, num);
+	
+	return aux->valor;
+}
+
+noh* lista::josephusAux(noh* aux, int num){
+	if(mTamanho == 1){
+		return aux;
+	}
+	else{
+		noh* temp;
+		for (int i = 0; i < num+1; i++)
+		{
+			temp = aux;
+			aux = aux->proximo;
+		}
+		
+		remover(aux, temp);
+		
+		return josephusAux(temp->proximo, int num);
+		
+	}
+}
+
+void lista::remover(noh* aux, noh* temp){
+	if(aux == mPrimeiro){
+		mPrimeiro = aux->proximo;
+		mUltimo->proximo = mPrimeiro;
+		aux->proximo = NULL;
+		delete aux;
+	}
+	else if(aux == mUltimo){
+		mUltimo = temp;
+		mUltimo->proximo = mPrimeiro;
+		aux->proximo = NULL;
+		delete aux;
+	}
+	else{
+		temp->proximo = aux->proximo;
+		aux->proximo = NULL;
+		delete aux;
+	}
+}
+
+
+
 int main(){
 
     int N, M;
@@ -74,7 +122,7 @@ int main(){
     cin >> N;
 
     lista umaLista(N);
-
+    
     umaLista.imprimir();
 
     return 0;
