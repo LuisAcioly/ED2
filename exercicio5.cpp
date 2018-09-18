@@ -39,19 +39,15 @@ class listadup {
       }
     };
     inline void insere(Dado dado) {
-      cout << "insere" << endl;
 
       noh* novo = new noh(dado);
 
       if(primeiro == NULL){
-          cout << "primeiro elemento" << endl;
           primeiro = novo;
           ultimo = novo;
       }
       else{
-          cout << "demais elementos" << endl;
           ultimo->proximo = novo;
-          cout << "teste 1" << endl;
           novo->anterior = ultimo;
           ultimo = novo;
       }
@@ -59,32 +55,20 @@ class listadup {
         tamanho++;
     };
     listadup* separa(int n) {
-      cout << "separa" << endl;
       if(n >= 0 && n < tamanho){
-          listadup* listaTemp;
-          noh* aux;
+          listadup* listaTemp = new listadup;
+          noh* aux = primeiro;
           
-          for(int i = 0; i < n; i++)
+          for(int i = 0; i <= n; i++)
           {
-            cout << "transferencia1" << endl;
-            aux = primeiro;
-            cout << "transferencia2" << endl;
-            cout << primeiro->dado << endl;
-            listaTemp->insere(primeiro->dado);
-            cout << "transferencia3" << endl;
-            primeiro = primeiro->proximo;
-            cout << "transferencia4" << endl;
-            primeiro->anterior = NULL;
-            cout << "transferencia5" << endl;
-            aux->proximo = NULL;
-            cout << "transferencia6" << endl;
-            aux->anterior = NULL;
-            cout << "transferencia7" << endl;
-            delete aux;
-            cout << "transferencia8" << endl;
-            tamanho--;
-            cout << "tranferencia9" << endl;
+			aux = aux->proximo;
           }
+          
+          listaTemp->primeiro = aux;
+          listaTemp->primeiro->anterior = NULL;
+          listaTemp->ultimo = ultimo;
+          ultimo = aux->anterior;
+          ultimo->proximo = NULL;
           return listaTemp;
       }
       else{
