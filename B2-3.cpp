@@ -66,18 +66,38 @@ void Noh::DividirSeNecessario(Noh** ptPtRaiz) {
 
 // Adiciona uma chave e um filho ao nó, na posição certa dos vetores.
 void Noh::InserirLocal(const TChave& chave, Noh* ptFilho) {
-    #warning Noh::InserirLocal não foi implementado.
-    // Deslocar chaves e filhos à direita até abrir espaço para a nova chave e filho.
-    // Atualizar a quantidade de chaves no nó.
-   short int posicao = ptFilho.mQtdChaves - 1;
-    
+	
 }
 
 // Desce recursivamente até achar uma folha para inserção. Faz as arrumações necessárias.
 void Noh::InserirRecursivo(const TChave& chave, Noh** ptPtRaiz) {
-    #warning Noh::InserirRecursivo não foi implementado.
-    // Se o nó é folha, inserir aqui mesmo e fazer ajustes necessários.
-    // Senão, recomeçar a inserção no filho apropriado.
+	
+    if((*ptPtRaiz)->mFilhos[0] == NULL){
+		InserirLocal(chave, (*ptPtRaiz));
+	}
+	else{
+		
+		if((*ptPtRaiz)->mQtdChaves == 1){
+			
+			if((*ptPtRaiz)->mChaves[0] > chave){
+				InserirRecursivo(chave, &(*ptPtRaiz)->mFilhos[0]);
+			}
+			else{
+				InserirRecursivo(chave, &(*ptPtRaiz)->mFilhos[1]);
+			}
+		}
+		else{
+			if((*ptPtRaiz)->mChaves[0] > chave){
+				InserirRecursivo(chave,  &(*ptPtRaiz)->mFilhos[0]);
+			}
+			else if((*ptPtRaiz)->mChaves[1] < chave){
+				InserirRecursivo(chave,  &(*ptPtRaiz)->mFilhos[2]);
+			}
+			else{
+				InserirRecursivo(chave,  &(*ptPtRaiz)->mFilhos[1]);
+			}
+		}
+	}
 }
 
 // Escreve um nó no formato [ID|chaves|pai;filhos]
